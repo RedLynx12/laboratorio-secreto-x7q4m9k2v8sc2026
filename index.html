@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central de Investigación</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="app">
+  <div id="orientation-lock" class="orientation-lock" aria-hidden="true">
+    <div class="orientation-icon">↻</div>
+    <strong>ORIENTACIÓN NO AUTORIZADA</strong>
+    <p>Gira el dispositivo para acceder al laboratorio.</p>
+  </div>
+
+  <!-- LABORATORIO -->
+  <section id="laboratory" class="laboratory" aria-hidden="true">
+    <div class="lab-overlay"></div>
+
+    <!-- Cabecera de identidad -->
+    <div id="welcome-message" class="welcome-message">
+      <p id="welcome-label">CENTRAL DE INVESTIGACIÓN</p>
+      <h1 id="welcome-title">CIENTÍFICO JUNIOR</h1>
+      <p id="welcome-subtitle">Bienvenido, Científico Junior.</p>
+    </div>
+
+    <!-- HUD de progreso -->
+    <div id="audio-controls" class="audio-controls" aria-label="Controles de audio">
+      <button id="music-toggle" type="button" aria-pressed="true">🎵 MÚSICA: ON</button>
+      <button id="sfx-toggle" type="button" aria-pressed="true">🔊 EFECTOS: ON</button>
+    </div>
+
+    <div id="progress-hud" class="progress-hud">
+      <div class="hud-label">REGISTRO CIENTÍFICO</div>
+      <div class="hud-row">
+        <span id="hud-rank">NIVEL 1 · CIENTÍFICO JUNIOR</span>
+        <span id="hud-xp">0 XP</span>
+      </div>
+      <div class="xp-track">
+        <div id="xp-bar" class="xp-bar"></div>
+      </div>
+    </div>
+
+    <!-- Hotspots: las coordenadas son relativas a la imagen -->
+    <button class="hotspot hotspot-archives" data-section="info" aria-label="Archivo científico">
+      <span class="hotspot-label">📂 ARCHIVO CIENTÍFICO</span>
+    </button>
+
+    <button class="hotspot hotspot-research" data-section="research" aria-label="Tablón de investigación">
+      <span class="hotspot-label">📋 INVESTIGACIONES</span>
+    </button>
+
+    <button class="hotspot hotspot-experiments" data-section="experiments" aria-label="Estación de experimentación">
+      <span class="hotspot-label">🧪 ESTACIÓN DE EXPERIMENTACIÓN</span>
+    </button>
+
+    <button class="hotspot hotspot-profile" data-section="profile" aria-label="Registro del investigador">
+      <span class="hotspot-label">🧠 REGISTRO DEL INVESTIGADOR</span>
+    </button>
+
+    <button class="hotspot hotspot-tests" data-section="tests" aria-label="Terminal de evaluación">
+      <span class="hotspot-label">🖥️ TERMINAL DE EVALUACIÓN</span>
+    </button>
+  </section>
+
+  <!-- PUERTAS -->
+  <section id="door-scene" class="door-scene">
+    <div class="door door-left"></div>
+    <div class="door door-right"></div>
+
+    <div id="access-panel" class="access-panel">
+      <div class="access-panel__header">
+        <span class="status-light"></span>
+        <span>CONTROL DE ACCESO</span>
+      </div>
+
+      <p class="access-panel__instruction">
+        Introduce tu identificación científica
+      </p>
+
+      <input id="username" class="username-input" type="text"
+             autocomplete="off" spellcheck="false"
+             placeholder="SCI-009-001" maxlength="30">
+
+      <button id="access-button" class="access-button">AUTORIZAR ACCESO</button>
+
+      <p id="access-message" class="access-message" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- CAPA DE SECCIONES -->
+  <section id="section-layer" class="section-layer" aria-hidden="true">
+
+    <div class="section-panel" data-panel="experiments">
+      <button class="back-button">← REGRESAR AL LABORATORIO</button>
+      <div class="section-header">
+        <span class="section-kicker">ESTACIÓN DE INVESTIGACIÓN</span>
+        <h2>EXPEDIENTES DE INVESTIGACIÓN</h2>
+        <p>Completa cada expediente en orden. Antes de experimentar, registra tu hipótesis en el Cuaderno de Campo.</p>
+      </div>
+      <div id="experiment-grid" class="experiment-grid"></div>
+    </div>
+
+    <div class="section-panel" data-panel="info">
+      <button class="back-button">← REGRESAR AL LABORATORIO</button>
+      <div class="section-header">
+        <span class="section-kicker">ARCHIVO CIENTÍFICO</span>
+        <h2>INFORMACIÓN IMPORTANTE</h2>
+        <p>Consulta los archivos desclasificados del laboratorio. Las palabras clave de los expedientes te traerán directamente hasta aquí.</p>
+      </div>
+      <div class="archive-intro">
+        <strong>ARCHIVO CENTRAL DE CONOCIMIENTO</strong>
+        <span>Las palabras subrayadas en los expedientes abren su ficha directamente.</span>
+      </div>
+      <div class="folder">
+        <div id="info-tabs" class="folder-tabs"></div>
+        <article id="info-content" class="folder-content"></article>
+      </div>
+    </div>
+
+    <div class="section-panel" data-panel="research">
+      <button class="back-button">← REGRESAR AL LABORATORIO</button>
+      <div class="section-header">
+        <span class="section-kicker">TABLÓN DE INVESTIGACIÓN</span>
+        <h2>INVESTIGACIONES</h2>
+        <p>Observa, registra, vuelve al laboratorio y envía tu informe científico.</p>
+      </div>
+      <div class="research-categories"></div>
+    </div>
+
+    <div class="section-panel" data-panel="profile">
+      <button class="back-button">← REGRESAR AL LABORATORIO</button>
+      <div class="section-header">
+        <span class="section-kicker">REGISTRO DEL INVESTIGADOR</span>
+        <h2 id="profile-title">CIENTÍFICO JUNIOR</h2>
+      </div>
+      <div class="profile-card">
+        <div class="profile-rank">RANGO ACTUAL</div>
+        <div id="profile-rank-name" class="profile-big">CIENTÍFICO JUNIOR</div>
+        <div id="profile-xp-text">0 XP</div>
+        <div class="xp-track large"><div id="profile-xp-bar" class="xp-bar"></div></div>
+        <p id="profile-next">Siguiente rango: CLASIFICADO</p>
+        <button class="secondary-button reset-progress-button" id="reset-progress-button" type="button">↺ REINICIAR PROGRESO</button>
+        <p class="reset-warning">Solo para pruebas y para la Dirección Científica. Reinicia XP y expedientes guardados en este navegador.</p>
+      </div>
+    </div>
+
+    <div class="section-panel" data-panel="tests">
+      <button class="back-button">← REGRESAR AL LABORATORIO</button>
+      <div class="section-header">
+        <span class="section-kicker">TERMINAL DE EVALUACIÓN</span>
+        <h2>TESTS CIENTÍFICOS</h2>
+        <p>Demuestra lo que has aprendido en experimentos, investigaciones y Archivo.</p>
+      </div>
+      <div class="test-list"></div>
+    </div>
+
+  </section>
+
+  <!-- ALERTA DE PADRES -->
+  <div id="denied-overlay" class="denied-overlay" aria-hidden="true">
+    <div class="alarm-wave" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="denied-box">
+      <div class="denied-alarm">🚨</div>
+      <h2>ACCESO DENEGADO PARA TI</h2>
+      <p>CARCAMAL DETECTADO</p>
+      <small>Esta zona está reservada para personal científico autorizado.</small>
+    </div>
+  </div>
+
+  <!-- TOASTS -->
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+
+    <button id="logout-button" type="button" aria-label="Cerrar sesión">
+      ⏻ CERRAR SESIÓN
+    </button>
+
+<button class="reset-progress-button" onclick="resetScientificProgress()">↺ REINICIAR PROGRESO</button></main>
+
+<!-- ASCENSO DE NIVEL: debe existir antes de cargar app.js para que el evento del botón pueda registrarse. -->
+<div id="level-up-overlay" class="level-up-overlay" aria-hidden="true">
+  <div class="level-up-box">
+    <div class="level-up-kicker">⚡ ASCENSO AUTORIZADO ⚡</div>
+    <div id="level-up-number" class="level-up-number">NIVEL 2</div>
+    <h2 id="level-up-rank">APRENDIZ DE LABORATORIO</h2>
+    <div id="level-up-xp" class="level-up-xp">100 XP</div>
+    <p>El laboratorio reconoce tu progreso científico.</p>
+    <button class="primary-button" id="level-up-continue" type="button">CONTINUAR INVESTIGACIÓN</button>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
